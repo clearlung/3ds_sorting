@@ -27,7 +27,10 @@ void bubbleSort(void *arg);
 // Selection sort
 void selectionSort(void *arg);
 
-// bogo sort
+// Bogo sort
 void bogoSort(void *arg);
+
+// Shell sort
+void shellSort(void *arg);
 
 #endif

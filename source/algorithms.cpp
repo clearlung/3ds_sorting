@@ -164,7 +164,7 @@ void mergeSort(unsigned int p, unsigned int r)
 	{
 		unsigned int q = (p + r) / 2;
 		mergeSort(p, q);
-		mergeSort(q + 1, r);
+    mergeSort(q + 1, r);
 		merge(p, q, r);
 	}
 }
@@ -244,3 +244,27 @@ void bogoSort(void *arg)
 	doneSorting = true;
 	finishSorting();
 }
+
+void shellSort(void *arg)
+{
+  int gap = arrayLen / 2;
+
+  while (gap > 0)
+  {
+    for (unsigned int i = gap; i < arrayLen; i++)
+    {
+      unsigned short j = i;
+      while (j > 0 && array[j] < array[j - gap])
+      {
+        swap(j, j - gap);
+        j--;
+        accessElement(j);
+        ThreadSleep(delayMs);
+      }
+    }
+    gap /= 2;
+  }
+  doneSorting = true;
+  finishSorting();
+}
+

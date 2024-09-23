@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
 
 		kDown = hidKeysDown();
 		gspWaitForVBlank();
-    		
+    
 		if (kDown & KEY_START) break; 
 		activeMenu->handleInput();
 
@@ -100,7 +100,6 @@ int main(int argc, char *argv[])
 
 		C3D_FrameEnd(0);
 		gfxFlushBuffers();
-		// gfxSwapBuffers();
 
 		if (doneSorting)
 		{
