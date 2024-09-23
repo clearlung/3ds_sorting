@@ -78,12 +78,10 @@ int main(int argc, char *argv[])
 
 		kDown = hidKeysDown();
 		gspWaitForVBlank();
-		// C3D_FrameBegin(C3D_FRAME_SYNCDRAW);
-		// C2D_TargetClear(top, clrClear);
-		// C2D_SceneBegin(top);
-		
-		
+    		
+		if (kDown & KEY_START) break; 
 		activeMenu->handleInput();
+
 		if (drawMenu > 0)
 		{
 			Menu::clearConsole();
@@ -99,11 +97,6 @@ int main(int argc, char *argv[])
 		{
 			drawArray();
 		}
-
-		if (kDown & KEY_START)
-			break; // break in order to return to hbmenu
-
-
 
 		C3D_FrameEnd(0);
 		gfxFlushBuffers();
