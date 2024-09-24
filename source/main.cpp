@@ -64,7 +64,6 @@ int main(int argc, char *argv[])
 
 	activeMenu = mainMenu;
 
-
 	initArray();
 
 	// Initialize Threads
@@ -79,7 +78,8 @@ int main(int argc, char *argv[])
 		kDown = hidKeysDown();
 		gspWaitForVBlank();
     
-		if (kDown & KEY_START) break; 
+
+    if (!isSorting && kDown & KEY_START) break;
 		activeMenu->handleInput();
 
 		if (drawMenu > 0)
@@ -103,6 +103,7 @@ int main(int argc, char *argv[])
 
 		if (doneSorting)
 		{
+      isSorting = 0;
 			threadJoin(sortThread, 10000000LL);
 			threadFree(sortThread);
 			activeIndex = UINT32_MAX;

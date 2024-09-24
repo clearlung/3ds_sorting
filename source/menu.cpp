@@ -13,7 +13,7 @@
 const std::vector<std::string> MENU_TEXT = {
 	"Sorting Algorithms",
 	"Settings",
-	"Exit"};
+  "Exit"};
 
 const std::vector<std::string> ALGO_TEXT = {
 	"Back",
@@ -61,7 +61,7 @@ Menu::Menu(const std::vector<std::string> text, void (*handlerFunction)())
 
 void Menu::draw()
 {
-    for (int i = 0; i < menuLen; i++)
+  for (int i = 0; i < menuLen; i++)
     {
         printf("\x1b[%i;%iH%s\n", i + 1, selector.length() + 1, MENU_TEXT[i].c_str());
 	}
@@ -75,22 +75,22 @@ void Menu::handleInput()
 		drawMenu++;
 	}
 
-    if (kDown & KEY_DOWN)
+  if (kDown & KEY_DOWN)
+  {
+    selected++;
+    if (selected > menuLen - 1)
     {
-        selected++;
-        if (selected > menuLen - 1)
-        {
-            selected = 0;
-        }
+      selected = 0;
     }
-    else if (kDown & KEY_UP)
+  }
+  else if (kDown & KEY_UP)
+  {
+    selected--;
+    if (selected < 0)
     {
-        selected--;
-        if (selected < 0)
-        {
-            selected = menuLen - 1;
-        }
+      selected = menuLen - 1;
     }
+  }
 }
 
 void switchMenu(Menu *menu)
@@ -112,14 +112,14 @@ void settingsMenuHandler()
 			switchMenu(mainMenu);
 			break;
 		case 1:
-			arrayLen = inputNum();
-			initArray();
+      arrayLen = inputNum();
+      initArray();
 			break;
 		case 2:
 			delayMs = inputNum();
 			break;
 		case 3:
-			initArray();
+      initArray();
 			break;
 		case 4:
 			isTree = !isTree;
@@ -150,78 +150,69 @@ void algoMenuHandler()
 			switchMenu(mainMenu);
 			break;
 		case 1:
-			if (newArrayOnStart)
-			{
-				initArray();
-			}
-			sortThread = threadCreate(insertionSort, NULL, STACKSIZE, prio - 1, 1, false);
-			//have a printf here that prints on the 16th row and starts on the MENU_TEXT[1].length()/2 column, and prints MENU_TEXT[1] (which is "Insertion Sort")
-			printf("\x1b[16;%iH%s\n", (20 - ALGO_TEXT[1].length()/2), ALGO_TEXT[1].c_str());
-			printf("\x1b[19;1H%s\n", DESCRIPTION_TEXT[0].c_str());
-
+      if (!isSorting) {
+        initSort();
+        sortThread = threadCreate(insertionSort, NULL, STACKSIZE, prio - 1, 1, false);
+        //have a printf here that prints on the 16th row and starts on the MENU_TEXT[1].length()/2 column, and prints MENU_TEXT[1] (which is "Insertion Sort")
+        printf("\x1b[16;%iH%s\n", (20 - ALGO_TEXT[1].length()/2), ALGO_TEXT[1].c_str());
+        printf("\x1b[19;1H%s\n", DESCRIPTION_TEXT[0].c_str());
+      }
 			break;
 		case 2:
-			if (newArrayOnStart)
-			{
-				initArray();
-			}
-			sortThread = threadCreate(mergeSortInit, NULL, STACKSIZE, prio - 1, 1, false);
-			printf("\x1b[16;%iH%s\n", (20 - ALGO_TEXT[2].length()/2), ALGO_TEXT[2].c_str());
-			printf("\x1b[19;1H%s\n", DESCRIPTION_TEXT[1].c_str());
+      if (!isSorting) {
+        initSort();
+        sortThread = threadCreate(mergeSortInit, NULL, STACKSIZE, prio - 1, 1, false);
+        printf("\x1b[16;%iH%s\n", (20 - ALGO_TEXT[2].length()/2), ALGO_TEXT[2].c_str());
+        printf("\x1b[19;1H%s\n", DESCRIPTION_TEXT[1].c_str());
+      }
 			break;
 		case 3:
-			if (newArrayOnStart)
-			{
-				initArray();
-			}
-			sortThread = threadCreate(heapSort, NULL, STACKSIZE, prio - 1, 1, false);
-			printf("\x1b[16;%iH%s\n", (20 - ALGO_TEXT[3].length()/2), ALGO_TEXT[3].c_str());
-			printf("\x1b[19;1H%s\n", DESCRIPTION_TEXT[2].c_str());
-			break;
+      if (!isSorting) {
+        initSort();
+        sortThread = threadCreate(heapSort, NULL, STACKSIZE, prio - 1, 1, false);
+        printf("\x1b[16;%iH%s\n", (20 - ALGO_TEXT[3].length()/2), ALGO_TEXT[3].c_str());
+        printf("\x1b[19;1H%s\n", DESCRIPTION_TEXT[2].c_str());
+      }
+      break;
 		case 4:
-			if (newArrayOnStart)
-			{
-				initArray();
-			}
-			sortThread = threadCreate(quickSortInit, NULL, STACKSIZE, prio - 1, 1, false);
-			printf("\x1b[16;%iH%s\n", (20 - ALGO_TEXT[4].length()/2), ALGO_TEXT[4].c_str());
-			printf("\x1b[19;1H%s\n", DESCRIPTION_TEXT[3].c_str());
+      if (!isSorting) {
+        initSort();
+        sortThread = threadCreate(quickSortInit, NULL, STACKSIZE, prio - 1, 1, false);
+        printf("\x1b[16;%iH%s\n", (20 - ALGO_TEXT[4].length()/2), ALGO_TEXT[4].c_str());
+        printf("\x1b[19;1H%s\n", DESCRIPTION_TEXT[3].c_str());
+      }
 			break;
 		case 5:
-			if (newArrayOnStart)
-			{
-				initArray();
-			}
-			sortThread = threadCreate(bubbleSort, NULL, STACKSIZE, prio - 1, 1, false);
-			printf("\x1b[16;%iH%s\n", (20 - ALGO_TEXT[5].length()/2), ALGO_TEXT[5].c_str());
-			printf("\x1b[19;1H%s\n", DESCRIPTION_TEXT[4].c_str());
+      if (!isSorting) {
+        initSort();
+        sortThread = threadCreate(bubbleSort, NULL, STACKSIZE, prio - 1, 1, false);
+        printf("\x1b[16;%iH%s\n", (20 - ALGO_TEXT[5].length()/2), ALGO_TEXT[5].c_str());
+        printf("\x1b[19;1H%s\n", DESCRIPTION_TEXT[4].c_str());
+      }
 			break;
 		case 6:
-			if (newArrayOnStart)
-			{
-				initArray();
-			}
-			sortThread = threadCreate(selectionSort, NULL, STACKSIZE, prio - 1, 1, false);
-			printf("\x1b[16;%iH%s\n", (20 - ALGO_TEXT[6].length()/2), ALGO_TEXT[6].c_str());
-			printf("\x1b[19;1H%s\n", DESCRIPTION_TEXT[5].c_str());
+      if (!isSorting) {
+        initSort();
+        sortThread = threadCreate(selectionSort, NULL, STACKSIZE, prio - 1, 1, false);
+        printf("\x1b[16;%iH%s\n", (20 - ALGO_TEXT[6].length()/2), ALGO_TEXT[6].c_str());
+        printf("\x1b[19;1H%s\n", DESCRIPTION_TEXT[5].c_str());
+      }
 			break;
 		case 7:
-			if (newArrayOnStart)
-			{
-				initArray();
-			}
-			sortThread = threadCreate(bogoSort, NULL, STACKSIZE, prio - 1, 1, false);
-			printf("\x1b[16;%iH%s\n", (20 - ALGO_TEXT[7].length()/2), ALGO_TEXT[7].c_str());
-			printf("\x1b[19;1H%s\n", DESCRIPTION_TEXT[6].c_str());
+      if (!isSorting) {
+        initSort();
+        sortThread = threadCreate(bogoSort, NULL, STACKSIZE, prio - 1, 1, false);
+        printf("\x1b[16;%iH%s\n", (20 - ALGO_TEXT[7].length()/2), ALGO_TEXT[7].c_str());
+        printf("\x1b[19;1H%s\n", DESCRIPTION_TEXT[6].c_str());
+      }
 			break;
 		case 8:
-			if (newArrayOnStart)
-			{
-				initArray();
-			}
-			sortThread = threadCreate(shellSort, NULL, STACKSIZE, prio - 1, 1, false);
-			printf("\x1b[16;%iH%s\n", (20 - ALGO_TEXT[8].length()/2), ALGO_TEXT[8].c_str());
-			printf("\x1b[19;1H%s\n", DESCRIPTION_TEXT[7].c_str());
+      if (!isSorting) {
+        initSort();
+        sortThread = threadCreate(shellSort, NULL, STACKSIZE, prio - 1, 1, false);
+        printf("\x1b[16;%iH%s\n", (20 - ALGO_TEXT[8].length()/2), ALGO_TEXT[8].c_str());
+        printf("\x1b[19;1H%s\n", DESCRIPTION_TEXT[7].c_str());
+      }
 			break;
 		default:
 			break;
@@ -249,10 +240,19 @@ void mainMenuHandler()
 			switchMenu(settingsMenu);
 			break;
 		case 2:
-			exit(0);
+      if (!isSorting)
+        exit(0);
 			break;
 		default:
 			break;
 		}
 	}
+}
+
+void initSort() {
+  if (newArrayOnStart)
+  {
+    initArray();
+  }
+  isSorting = 1;
 }

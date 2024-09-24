@@ -3,5 +3,4 @@
 
 int atoui(const char *str);
 void ThreadSleep(unsigned int ms);
-
 #endif

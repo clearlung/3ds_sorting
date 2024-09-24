@@ -1,6 +1,7 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include "globals.hpp"
 #include <string>
 #include <vector>
 #include <stdlib.h>
@@ -18,7 +19,6 @@ extern const std::vector<std::string> SETTINGS_TEXT;
 
 // Description text
 extern const std::vector<std::string> DESCRIPTION_TEXT;
-
 
 class Menu
 {
@@ -42,4 +42,5 @@ void settingsMenuHandler();
 void algoMenuHandler();
 void mainMenuHandler();
 
+void initSort();
 #endif

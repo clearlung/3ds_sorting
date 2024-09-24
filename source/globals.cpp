@@ -42,3 +42,5 @@ volatile bool doneSorting = false;
 volatile unsigned int activeIndex = 0;
 
 unsigned int* array = (unsigned int*) malloc(1);
+
+int isSorting = 0;

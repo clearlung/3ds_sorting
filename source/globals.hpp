@@ -61,5 +61,6 @@ extern s32 prio;
 extern volatile bool doneSorting;
 extern volatile unsigned int activeIndex;
 
-
+// Sorting State
+extern int isSorting;
 #endif
